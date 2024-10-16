@@ -3,7 +3,6 @@ package controllers
 import (
 	"MLMW/BEGoGin/models"
 	"MLMW/BEGoGin/utils"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -33,8 +32,6 @@ func (controller Controller) LoginUserController(ctx *gin.Context) {
 		return
 	}
 	res, err := controller.handler.LoginUserHandler(ctx, req)
-	fmt.Println("!!--> ", res)
-	fmt.Println("!!--> ", err)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
 		return

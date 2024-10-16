@@ -44,11 +44,19 @@ func (server *Server) setUpRouters() {
 	router := gin.Default()
 	public := router.Group("/apis")
 	private := router.Group("/apis").Use(middlewares.AuthMiddleware(server.tokenMaker))
+	// Serve static files from the "upload" directory at the URL path "/upload"
+	router.Static("/upload", "./upload")
 
 	//PUBLIC
 	public.GET("/example", server.controller.TestUserController)
 	public.POST("/user/createUser", server.controller.CreateUserController)
 	public.POST("/user/login", server.controller.LoginUserController)
+
+	public.GET("/track/getAllPublicTracks", server.controller.GetAllPublicTracksController)
+	public.GET("/track/getAllTracksByUserId/:id", server.controller.GetAllTracksByUserIdController)
+	public.POST("/track/createTrack", server.controller.CreateTrackController)
+	public.PUT("/track/updateTrack", server.controller.UpdateTrackController)
+	public.DELETE("/track/deleteTrack/:id", server.controller.DeleteTrackByIdController)
 
 	//PRIVATE authenticated users
 	// pRouter := router.Group("/").Use(authMidldeware())

@@ -58,9 +58,7 @@ func (handler Handler) LoginUserHandler(ctx *gin.Context, req models.LoginUserRe
 	if err != nil {
 		return models.LoginUserResponse{}, err
 	}
-	fmt.Println("--> ", accessToken)
-	fmt.Println("--> ", accessPayload)
-	fmt.Println("--> ", err)
+
 	return models.LoginUserResponse{
 		Token:     accessToken,
 		ExpiredAt: accessPayload.ExpiredAt,

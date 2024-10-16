@@ -22,7 +22,7 @@ func (query Query) CreateUserQuery(ctx *gin.Context, user models.UserSchema) (mo
 }
 
 func (query Query) GetUserByUsernameQuery(ctx *gin.Context, username string) (models.UserSchema, error) {
-	sqlCmd := fmt.Sprintf("SELECT * FROM %v WHERE username=$1", utils.TABLE_USERS)
+	sqlCmd := fmt.Sprintf("SELECT * FROM %s WHERE username=$1", utils.TABLE_USERS)
 
 	res := models.UserSchema{}
 
