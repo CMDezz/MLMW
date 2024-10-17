@@ -5,7 +5,6 @@ import (
 	"MLMW/BEGoGin/infras/auth"
 	"MLMW/BEGoGin/infras/middlewares"
 	"MLMW/BEGoGin/utils"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
@@ -48,19 +47,25 @@ func (server *Server) setUpRouters() {
 	router.Static("/upload", "./upload")
 
 	//PUBLIC
-	public.GET("/example", server.controller.TestUserController)
 	public.POST("/user/createUser", server.controller.CreateUserController)
 	public.POST("/user/login", server.controller.LoginUserController)
 
 	public.GET("/track/getAllPublicTracks", server.controller.GetAllPublicTracksController)
-	public.GET("/track/getAllTracksByUserId/:id", server.controller.GetAllTracksByUserIdController)
-	public.POST("/track/createTrack", server.controller.CreateTrackController)
-	public.PUT("/track/updateTrack", server.controller.UpdateTrackController)
-	public.DELETE("/track/deleteTrack/:id", server.controller.DeleteTrackByIdController)
+
+	public.GET("/playlist/getAllPublicPlaylists", server.controller.GetAllPublicPlaylists)
+
+	public.GET("/search", server.controller.SearchingController)
 
 	//PRIVATE authenticated users
-	// pRouter := router.Group("/").Use(authMidldeware())
-	private.GET("/examplePrivate", func(ctx *gin.Context) { fmt.Println("samplePrivate") })
+	private.GET("/track/getAllTracksByUserId/:id", server.controller.GetAllTracksByUserIdController)
+	private.POST("/track/createTrack", server.controller.CreateTrackController)
+	private.PUT("/track/updateTrack", server.controller.UpdateTrackController)
+	private.DELETE("/track/deleteTrack/:id", server.controller.DeleteTrackByIdController)
+
+	private.GET("/playlist/getAllPlaylistsByUserId/:id", server.controller.GetAllPlaylistsByUserIdController)
+	private.POST("/playlist/createPlaylist", server.controller.CreatePlaylistController)
+	private.PUT("/playlist/updatePlaylist", server.controller.UpdatePlaylistController)
+	private.DELETE("/playlist/deletePlaylist/:id", server.controller.DeletePlaylistByIdController)
 
 	server.router = router
 }

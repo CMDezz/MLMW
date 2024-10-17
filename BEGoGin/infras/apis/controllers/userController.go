@@ -38,8 +38,3 @@ func (controller Controller) LoginUserController(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, utils.SuccessResponse(res))
 }
-
-func (controller Controller) TestUserController(ctx *gin.Context) {
-	controller.handler.TestUserHandler(ctx)
-	ctx.JSON(http.StatusOK, nil)
-}

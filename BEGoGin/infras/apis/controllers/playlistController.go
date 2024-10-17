@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (controller Controller) GetAllPublicTracksController(ctx *gin.Context) {
-	res, err := controller.handler.GetAllPublicTrackHandler(ctx)
+func (controller Controller) GetAllPublicPlaylists(ctx *gin.Context) {
+	res, err := controller.handler.GetAllPublicPlaylistsHandler(ctx)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
@@ -21,7 +21,7 @@ func (controller Controller) GetAllPublicTracksController(ctx *gin.Context) {
 // TODO: if have time
 // GET id user/username from authorization token parsed to payload
 // instead of get from uri
-func (controller Controller) GetAllTracksByUserIdController(ctx *gin.Context) {
+func (controller Controller) GetAllPlaylistsByUserIdController(ctx *gin.Context) {
 	var req models.ByIdRequest
 
 	//validate req
@@ -29,7 +29,7 @@ func (controller Controller) GetAllTracksByUserIdController(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
 		return
 	}
-	res, err := controller.handler.GetAllTracksByUserIdHandler(ctx, req.ID)
+	res, err := controller.handler.GetAllPlaylistsByUserIdHandler(ctx, req.ID)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
@@ -38,8 +38,8 @@ func (controller Controller) GetAllTracksByUserIdController(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, utils.SuccessResponse(res))
 }
 
-func (controller Controller) CreateTrackController(ctx *gin.Context) {
-	var req models.CreateTrackFormRequest
+func (controller Controller) CreatePlaylistController(ctx *gin.Context) {
+	var req models.CreatePlaylistFormRequest
 
 	// Bind form
 	if err := ctx.ShouldBind(&req); err != nil {
@@ -47,7 +47,7 @@ func (controller Controller) CreateTrackController(ctx *gin.Context) {
 		return
 	}
 
-	res, err := controller.handler.CreateTrackHandler(ctx, req)
+	res, err := controller.handler.CreatePlaylistHandler(ctx, req)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
@@ -56,8 +56,8 @@ func (controller Controller) CreateTrackController(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, utils.SuccessResponse(res))
 }
 
-func (controller Controller) UpdateTrackController(ctx *gin.Context) {
-	var req models.UpdateTrackFormRequest
+func (controller Controller) UpdatePlaylistController(ctx *gin.Context) {
+	var req models.UpdatePlaylistFormRequest
 
 	// Bind form
 	if err := ctx.ShouldBind(&req); err != nil {
@@ -65,7 +65,7 @@ func (controller Controller) UpdateTrackController(ctx *gin.Context) {
 		return
 	}
 
-	res, err := controller.handler.UpdateTrackHandler(ctx, req)
+	res, err := controller.handler.UpdatePlaylistHandler(ctx, req)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
@@ -74,7 +74,7 @@ func (controller Controller) UpdateTrackController(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, utils.SuccessResponse(res))
 }
 
-func (controller Controller) DeleteTrackByIdController(ctx *gin.Context) {
+func (controller Controller) DeletePlaylistByIdController(ctx *gin.Context) {
 	var req models.ByIdRequest
 
 	//validate req
@@ -82,7 +82,7 @@ func (controller Controller) DeleteTrackByIdController(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
 		return
 	}
-	res, err := controller.handler.DeleteTrackByIdHandler(ctx, req.ID)
+	res, err := controller.handler.DeletePlaylistByIdHandler(ctx, req.ID)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))

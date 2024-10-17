@@ -52,7 +52,7 @@ func (handler Handler) GetAllTracksByUserIdHandler(ctx *gin.Context, id int64) (
 	}, nil
 }
 
-func (handler Handler) DeleteTrackByIdController(ctx *gin.Context, id int64) (models.DeletedResponse, error) {
+func (handler Handler) DeleteTrackByIdHandler(ctx *gin.Context, id int64) (models.DeletedResponse, error) {
 	err := handler.query.DeleteTrackByIdQuery(ctx, id)
 
 	if err != nil {
@@ -128,7 +128,7 @@ func (handler Handler) UpdateTrackHandler(ctx *gin.Context, req models.UpdateTra
 
 			if matches != "" {
 				err := os.Remove(matches)
-				if err != nil {
+				if err != nil && !os.IsNotExist(err) { // no exist ? -> continue to upload, no problem
 					return models.TrackResponse{}, err
 				}
 			} else {

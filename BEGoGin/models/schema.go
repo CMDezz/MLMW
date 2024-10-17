@@ -30,3 +30,14 @@ type TrackToPlayListSchema struct {
 	TrackId    int64 `json:"track_id" db:"track_id"`
 	PlaylistId int64 `json:"playlist_id" db:"playlist_id"`
 }
+
+type PlaylistSchema struct {
+	Id           int64     `json:"id" db:"id"`
+	PlaylistName string    `json:"playlist_name" db:"playlist_name"`
+	Description  string    `json:"description" db:"description"`
+	CoverImage   string    `json:"cover_image" db:"cover_image"`
+	UserId       int64     `json:"user_id" db:"user_id"`
+	IsPublic     bool      `json:"is_public" db:"is_public"`
+	IsDeleted    bool      `json:"is_deleted" db:"is_deleted"`
+	CreatedAt    time.Time `json:"created_at" db:"created_at"`
+}

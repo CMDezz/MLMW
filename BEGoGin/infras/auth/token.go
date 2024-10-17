@@ -37,7 +37,6 @@ func (tokenMaker TokenMaker) NewToken(username string, email string, duration ti
 }
 
 func (tokenMaker TokenMaker) ValidToken(token string) (*Payload, error) {
-	fmt.Println(token)
 	var keyFunc = func(tk *jwt.Token) (any, error) {
 		//Token was not the same picked security
 		if _, ok := tk.Method.(*jwt.SigningMethodHMAC); !ok {

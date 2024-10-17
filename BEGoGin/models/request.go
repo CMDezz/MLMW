@@ -4,6 +4,14 @@ import "mime/multipart"
 
 // REQUEST APIS MODELS
 
+//COMMON
+type ByIdRequest struct {
+	ID int64 `uri:"id" binding:"required,min=1"`
+}
+type SearchingRequest struct {
+	Keyword string `form:"keyword" binding:"required,min=1"`
+}
+
 //USER APIS
 type CreateUserRequest struct {
 	Username string `json:"username" binding:"required,alphanum"`
@@ -40,8 +48,19 @@ type UpdateTrackFormRequest struct { // Upload by JS FormData, parse to this str
 	TrackFile   *multipart.FileHeader `form:"track_file"`
 }
 
-type ByIdRequest struct {
-	ID int64 `uri:"id" binding:"required,min=1"`
+//PLAYLIST APIS
+
+type CreatePlaylistFormRequest struct {
+	PlaylistName string                `form:"playlist_name" binding:"required"`
+	UserId       int64                 `form:"user_id" binding:"required"`
+	Description  string                `form:"description" binding:"required"`
+	CoverImage   *multipart.FileHeader `form:"cover_image" `
 }
 
-//PLAYLIST APIS
+type UpdatePlaylistFormRequest struct {
+	Id           int64                 `form:"id"  binding:"required"`
+	PlaylistName string                `form:"playlist_name" binding:"required"`
+	Description  string                `form:"description" binding:"required"`
+	CoverImage   *multipart.FileHeader `form:"cover_image" `
+	IsPublic     bool                  `form:"is_public"`
+}

@@ -4,7 +4,6 @@ import (
 	"MLMW/BEGoGin/infras/auth"
 	"MLMW/BEGoGin/models"
 	"MLMW/BEGoGin/utils"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -66,11 +65,4 @@ func (handler Handler) LoginUserHandler(ctx *gin.Context, req models.LoginUserRe
 		FullName:  user.FullName,
 		Email:     user.Email,
 	}, nil
-}
-
-func (handler Handler) TestUserHandler(ctx *gin.Context) {
-	fmt.Println("TestUserHandler")
-
-	handler.query.TestUserQuery(ctx)
-
 }

@@ -33,8 +33,3 @@ func (query Query) GetUserByUsernameQuery(ctx *gin.Context, username string) (mo
 	}
 	return res, nil
 }
-
-func (query Query) TestUserQuery(ctx *gin.Context) {
-	fmt.Println("TestUserHandler")
-
-}

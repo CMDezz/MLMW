@@ -97,3 +97,17 @@ func (query Query) DeleteTrackByIdQuery(ctx *gin.Context, id int64) error {
 	}
 	return nil
 }
+
+func (query Query) SearchingTracksQuery(ctx *gin.Context, keyword string) ([]models.TrackSchema, error) {
+	sqlCmd := fmt.Sprintf("SELECT * FROM %s WHERE (title ILIKE $1 OR artist ILIKE $1) AND is_deleted=$2", utils.TABLE_TRACKS)
+
+	var res []models.TrackSchema
+
+	err := query.store.Select(&res, sqlCmd, keyword, false)
+
+	if err != nil {
+		return []models.TrackSchema{}, err
+	}
+
+	return res, nil
+}
