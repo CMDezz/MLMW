@@ -23,6 +23,7 @@ type TrackSchema struct {
 	Url         string    `json:"url" db:"url"`
 	IsPublic    bool      `json:"is_public" db:"is_public"`
 	IsDeleted   bool      `json:"is_deleted" db:"is_deleted"`
+	CoverImage  string    `json:"cover_image" db:"cover_image"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 }
 

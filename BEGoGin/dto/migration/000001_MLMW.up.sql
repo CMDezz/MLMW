@@ -28,6 +28,7 @@ CREATE TABLE "tracks" (
   "release_year" int NOT NULL,
   "user_id" bigserial NOT NULL,
   "url" varchar NOT NULL,
+  "cover_image" varchar NOT NULL,
   "is_public" bool NOT NULL DEFAULT true,
   "is_deleted" bool NOT NULL DEFAULT false,
   "created_at" timestamptz NOT NULL DEFAULT (now())

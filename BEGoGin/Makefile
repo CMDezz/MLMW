@@ -11,10 +11,10 @@ migrateInit:
 	migrate create -ext sql -dir dto/migration -seq MLMW
 
 migrateInitUp:
-	migrate -path dto/migration -database "postgresql://root:secret@127.0.0.1:5432/MLMW?sslmode=disable" -verbose up
+	migrate -path dto/migration -database "postgresql://root:secret@localhost:5432/MLMW?sslmode=disable" -verbose up
 
 migrateInitDown:
-	migrate -path dto/migration -database "postgresql://root:secret@127.0.0.1:5432/MLMW?sslmode=disable" -verbose down
+	migrate -path dto/migration -database "postgresql://root:secret@localhost:5432/MLMW?sslmode=disable" -verbose down
 
 start:
 	go run main.go

@@ -34,6 +34,7 @@ type CreateTrackFormRequest struct { // Upload by JS FormData, parse to this str
 	Genre       string                `form:"genre" binding:"required"`
 	ReleaseYear int                   `form:"release_year" binding:"required"`
 	UserId      int64                 `form:"user_id" binding:"required"`
+	CoverImage  *multipart.FileHeader `form:"cover_image" binding:"required"`
 	TrackFile   *multipart.FileHeader `form:"track_file" binding:"required"`
 }
 
@@ -45,6 +46,7 @@ type UpdateTrackFormRequest struct { // Upload by JS FormData, parse to this str
 	Genre       string                `form:"genre" binding:"required"`
 	ReleaseYear int                   `form:"release_year" binding:"required"`
 	IsPublic    bool                  `form:"is_public"`
+	CoverImage  *multipart.FileHeader `form:"cover_image"`
 	TrackFile   *multipart.FileHeader `form:"track_file"`
 }
 

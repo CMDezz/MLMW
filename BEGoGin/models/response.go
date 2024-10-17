@@ -23,6 +23,7 @@ type LoginUserResponse struct {
 type TrackResponse struct {
 	Id          int64     `json:"id" db:"id"`
 	Title       string    `json:"title" db:"title"`
+	CoverImage  string    `json:"cover_image" db:"cover_image"`
 	Artist      string    `json:"artist" db:"artist"`
 	Album       string    `json:"album" db:"album"`
 	Genre       string    `json:"genre" db:"genre"`

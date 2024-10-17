@@ -72,6 +72,12 @@ func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTra
 		return models.TrackResponse{}, err
 	}
 
+	//Turn binaryfile into osFile and save to upload Folder
+	filePathImage, err := utils.SaveUploadedFile(req.CoverImage, utils.UPLOAD_DIR_IMAGE)
+	if err != nil {
+		return models.TrackResponse{}, err
+	}
+
 	track := models.TrackSchema{
 		Title:       req.Title,
 		Artist:      req.Artist,
@@ -79,6 +85,7 @@ func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTra
 		Genre:       req.Genre,
 		ReleaseYear: req.ReleaseYear,
 		UserId:      req.UserId,
+		CoverImage:  filePathImage,
 		Url:         filePath,
 	}
 
@@ -93,6 +100,7 @@ func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTra
 		Album:       res.Album,
 		Genre:       res.Genre,
 		IsPublic:    res.IsPublic,
+		CoverImage:  res.CoverImage,
 		ReleaseYear: res.ReleaseYear,
 		UserId:      res.UserId,
 		Url:         res.Url,
@@ -117,6 +125,7 @@ func (handler Handler) UpdateTrackHandler(ctx *gin.Context, req models.UpdateTra
 		ReleaseYear: req.ReleaseYear,
 		IsPublic:    req.IsPublic,
 		Url:         track.Url,
+		CoverImage:  track.CoverImage,
 	}
 
 	//CASE: change audio file
@@ -143,6 +152,30 @@ func (handler Handler) UpdateTrackHandler(ctx *gin.Context, req models.UpdateTra
 		}
 		updatedTrack.Url = filePath
 	}
+	//CASE: change CoverImage file
+	if req.CoverImage != nil {
+		//remove previous file
+		if track.CoverImage != "" {
+			re := regexp.MustCompile(`(upload/images/.*)`)
+			matches := re.FindString(track.CoverImage)
+
+			if matches != "" {
+				err := os.Remove(matches)
+				if err != nil && !os.IsNotExist(err) { // no exist ? -> continue to upload, no problem
+					return models.TrackResponse{}, err
+				}
+			} else {
+				return models.TrackResponse{}, err
+			}
+		}
+
+		//Turn binaryfile into osFile and save to upload Folder
+		filePath, err := utils.SaveUploadedFile(req.CoverImage, utils.UPLOAD_DIR_IMAGE)
+		if err != nil {
+			return models.TrackResponse{}, err
+		}
+		updatedTrack.CoverImage = filePath
+	}
 
 	res, err := handler.query.UpdateTrackQuery(ctx, updatedTrack)
 	if err != nil {
@@ -158,6 +191,7 @@ func (handler Handler) UpdateTrackHandler(ctx *gin.Context, req models.UpdateTra
 		ReleaseYear: res.ReleaseYear,
 		UserId:      res.UserId,
 		Url:         res.Url,
+		CoverImage:  res.CoverImage,
 		CreatedAt:   res.CreatedAt,
 	}, nil
 }
