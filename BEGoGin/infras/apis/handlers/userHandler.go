@@ -53,7 +53,7 @@ func (handler Handler) LoginUserHandler(ctx *gin.Context, req models.LoginUserRe
 	}
 
 	//create new token
-	accessToken, accessPayload, err := handler.tokenMaker.NewToken(user.Username, user.Email, utils.DEFAULT_ACCESS_TOKEN_DURATION)
+	accessToken, accessPayload, err := handler.tokenMaker.NewToken(user.Username, user.Email, user.Id, utils.DEFAULT_ACCESS_TOKEN_DURATION)
 	if err != nil {
 		return models.LoginUserResponse{}, err
 	}

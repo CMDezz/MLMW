@@ -21,8 +21,8 @@ func NewTokenMaker(secretKey string) (TokenMaker, error) {
 	}, nil
 }
 
-func (tokenMaker TokenMaker) NewToken(username string, email string, duration time.Duration) (string, *Payload, error) {
-	payload, err := NewPayload(username, email, duration)
+func (tokenMaker TokenMaker) NewToken(username string, email string, userId int64, duration time.Duration) (string, *Payload, error) {
+	payload, err := NewPayload(username, email, userId, duration)
 	if err != nil {
 		return "", &Payload{}, err
 	}
@@ -51,6 +51,7 @@ func (tokenMaker TokenMaker) ValidToken(token string) (*Payload, error) {
 	}
 	// get payload
 	payload, ok := jwtToken.Claims.(*Payload)
+	fmt.Println("---< pppll ", payload)
 	if !ok {
 		return nil, fmt.Errorf("token is invalid")
 	}

@@ -28,14 +28,15 @@ type LoginUserRequest struct {
 //TRACK APIS
 
 type CreateTrackFormRequest struct { // Upload by JS FormData, parse to this struct later
-	Title       string                `form:"title" binding:"required"`
-	Artist      string                `form:"artist" binding:"required"`
-	Album       string                `form:"album" binding:"required"`
-	Genre       string                `form:"genre" binding:"required"`
-	ReleaseYear int                   `form:"release_year" binding:"required"`
-	UserId      int64                 `form:"user_id" binding:"required"`
-	CoverImage  *multipart.FileHeader `form:"cover_image" binding:"required"`
-	TrackFile   *multipart.FileHeader `form:"track_file" binding:"required"`
+	Title       string `form:"title" binding:"required"`
+	Artist      string `form:"artist" binding:"required"`
+	Album       string `form:"album" binding:"required"`
+	Genre       string `form:"genre" binding:"required"`
+	ReleaseYear int    `form:"release_year" binding:"required"`
+	Duration    int    `form:"duration" binding:"required"`
+	// UserId      int64                 `form:"user_id" binding:"required"`
+	CoverImage *multipart.FileHeader `form:"cover_image" binding:"required"`
+	TrackFile  *multipart.FileHeader `form:"track_file" binding:"required"`
 }
 
 type UpdateTrackFormRequest struct { // Upload by JS FormData, parse to this struct later
@@ -45,6 +46,7 @@ type UpdateTrackFormRequest struct { // Upload by JS FormData, parse to this str
 	Album       string                `form:"album" binding:"required"`
 	Genre       string                `form:"genre" binding:"required"`
 	ReleaseYear int                   `form:"release_year" binding:"required"`
+	Duration    int                   `form:"duration" binding:"required"`
 	IsPublic    bool                  `form:"is_public"`
 	CoverImage  *multipart.FileHeader `form:"cover_image"`
 	TrackFile   *multipart.FileHeader `form:"track_file"`
@@ -53,10 +55,10 @@ type UpdateTrackFormRequest struct { // Upload by JS FormData, parse to this str
 //PLAYLIST APIS
 
 type CreatePlaylistFormRequest struct {
-	PlaylistName string                `form:"playlist_name" binding:"required"`
-	UserId       int64                 `form:"user_id" binding:"required"`
-	Description  string                `form:"description" binding:"required"`
-	CoverImage   *multipart.FileHeader `form:"cover_image" `
+	PlaylistName string `form:"playlist_name" binding:"required"`
+	// UserId       int64                 `form:"user_id" binding:"required"`
+	Description string                `form:"description" binding:"required"`
+	CoverImage  *multipart.FileHeader `form:"cover_image" `
 }
 
 type UpdatePlaylistFormRequest struct {

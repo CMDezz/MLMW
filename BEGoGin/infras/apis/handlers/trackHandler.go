@@ -19,9 +19,11 @@ func mapTrackSchemaToTrackResponse(tracksSchema *[]models.TrackSchema) []models.
 			Album:       track.Album,
 			Genre:       track.Genre,
 			ReleaseYear: track.ReleaseYear,
+			Duration:    track.Duration,
 			IsPublic:    track.IsPublic,
 			UserId:      track.UserId,
 			Url:         track.Url,
+			CoverImage:  track.CoverImage,
 			CreatedAt:   track.CreatedAt,
 		}
 	}
@@ -64,7 +66,7 @@ func (handler Handler) DeleteTrackByIdHandler(ctx *gin.Context, id int64) (model
 	}, nil
 }
 
-func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTrackFormRequest) (models.TrackResponse, error) {
+func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTrackFormRequest, userId int64) (models.TrackResponse, error) {
 
 	//Turn binaryfile into osFile and save to upload Folder
 	filePath, err := utils.SaveUploadedFile(req.TrackFile, utils.UPLOAD_DIR_TRACK)
@@ -84,7 +86,8 @@ func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTra
 		Album:       req.Album,
 		Genre:       req.Genre,
 		ReleaseYear: req.ReleaseYear,
-		UserId:      req.UserId,
+		Duration:    req.Duration,
+		UserId:      userId,
 		CoverImage:  filePathImage,
 		Url:         filePath,
 	}
@@ -102,6 +105,7 @@ func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTra
 		IsPublic:    res.IsPublic,
 		CoverImage:  res.CoverImage,
 		ReleaseYear: res.ReleaseYear,
+		Duration:    res.Duration,
 		UserId:      res.UserId,
 		Url:         res.Url,
 		CreatedAt:   res.CreatedAt,
@@ -123,6 +127,7 @@ func (handler Handler) UpdateTrackHandler(ctx *gin.Context, req models.UpdateTra
 		Album:       req.Album,
 		Genre:       req.Genre,
 		ReleaseYear: req.ReleaseYear,
+		Duration:    req.Duration,
 		IsPublic:    req.IsPublic,
 		Url:         track.Url,
 		CoverImage:  track.CoverImage,
@@ -187,6 +192,7 @@ func (handler Handler) UpdateTrackHandler(ctx *gin.Context, req models.UpdateTra
 		Artist:      res.Artist,
 		Album:       res.Album,
 		Genre:       res.Genre,
+		Duration:    res.Duration,
 		IsPublic:    res.IsPublic,
 		ReleaseYear: res.ReleaseYear,
 		UserId:      res.UserId,
@@ -194,4 +200,14 @@ func (handler Handler) UpdateTrackHandler(ctx *gin.Context, req models.UpdateTra
 		CoverImage:  res.CoverImage,
 		CreatedAt:   res.CreatedAt,
 	}, nil
+}
+
+func (handler Handler) GetTrackByIdHandler(ctx *gin.Context, id int64) (models.TrackSchema, error) {
+	res, err := handler.query.GetTrackById(ctx, id)
+
+	if err != nil {
+		return models.TrackSchema{}, err
+	}
+
+	return res, nil
 }

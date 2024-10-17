@@ -49,7 +49,7 @@ func (handler Handler) GetAllPlaylistsByUserIdHandler(ctx *gin.Context, id int64
 	}, nil
 }
 
-func (handler Handler) CreatePlaylistHandler(ctx *gin.Context, req models.CreatePlaylistFormRequest) (models.PlaylistResponse, error) {
+func (handler Handler) CreatePlaylistHandler(ctx *gin.Context, req models.CreatePlaylistFormRequest, userId int64) (models.PlaylistResponse, error) {
 
 	//Turn binaryfile into osFile and save to upload Folder
 	filePath, err := utils.SaveUploadedFile(req.CoverImage, utils.UPLOAD_DIR_IMAGE)
@@ -60,7 +60,7 @@ func (handler Handler) CreatePlaylistHandler(ctx *gin.Context, req models.Create
 	playlist := models.PlaylistSchema{
 		PlaylistName: req.PlaylistName,
 		Description:  req.Description,
-		UserId:       req.UserId,
+		UserId:       userId,
 		CoverImage:   filePath,
 	}
 

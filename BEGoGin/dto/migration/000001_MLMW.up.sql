@@ -26,6 +26,7 @@ CREATE TABLE "tracks" (
   "album" varchar NOT NULL,
   "genre" varchar NOT NULL,
   "release_year" int NOT NULL,
+  "duration" int NOT NULL,
   "user_id" bigserial NOT NULL,
   "url" varchar NOT NULL,
   "cover_image" varchar NOT NULL,

@@ -51,13 +51,13 @@ func (query Query) GetTrackById(ctx *gin.Context, id int64) (models.TrackSchema,
 }
 
 func (query Query) CreateTrackQuery(ctx *gin.Context, track models.TrackSchema) (models.TrackSchema, error) {
-	sqlCmd := fmt.Sprintf("INSERT INTO %s (title, artist, album,genre,release_year,user_id,url,cover_image) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *", utils.TABLE_TRACKS)
+	sqlCmd := fmt.Sprintf("INSERT INTO %s (title, artist, album,genre,release_year,user_id,url,cover_image,duration) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *", utils.TABLE_TRACKS)
 
 	var res models.TrackSchema
 
 	// playlistId := utils.MarshalGetString(track.PlaylistId)
 
-	err := query.store.QueryRowxContext(ctx, sqlCmd, track.Title, track.Artist, track.Album, track.Genre, track.ReleaseYear, track.UserId, track.Url, track.CoverImage).StructScan(&res)
+	err := query.store.QueryRowxContext(ctx, sqlCmd, track.Title, track.Artist, track.Album, track.Genre, track.ReleaseYear, track.UserId, track.Url, track.CoverImage, track.Duration).StructScan(&res)
 
 	if err != nil {
 		return models.TrackSchema{}, err
@@ -68,13 +68,13 @@ func (query Query) CreateTrackQuery(ctx *gin.Context, track models.TrackSchema) 
 func (query Query) UpdateTrackQuery(ctx *gin.Context, track models.TrackSchema) (models.TrackSchema, error) {
 	sqlCmd := fmt.Sprintf(`
 		UPDATE %s
-        SET title = $2, artist = $3, album = $4, genre = $5, release_year = $6, url = $7, is_public = $8, cover_image = $9
+        SET title = $2, artist = $3, album = $4, genre = $5, release_year = $6, url = $7, is_public = $8, cover_image = $9, duration = $10
         WHERE id = $1
         RETURNING *
 	`, utils.TABLE_TRACKS)
 
 	var res models.TrackSchema
-	err := query.store.QueryRowxContext(ctx, sqlCmd, track.Id, track.Title, track.Artist, track.Album, track.Genre, track.ReleaseYear, track.Url, track.IsPublic, track.CoverImage).StructScan(&res)
+	err := query.store.QueryRowxContext(ctx, sqlCmd, track.Id, track.Title, track.Artist, track.Album, track.Genre, track.ReleaseYear, track.Url, track.IsPublic, track.CoverImage, track.Duration).StructScan(&res)
 
 	if err != nil {
 		return models.TrackSchema{}, err

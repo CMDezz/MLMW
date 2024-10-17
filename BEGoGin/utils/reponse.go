@@ -4,8 +4,8 @@ import "github.com/gin-gonic/gin"
 
 func ErrorResponse(err error) gin.H {
 	return gin.H{
-		"Message: ": "Something went wrong!",
-		"Error: ":   err.Error(),
+		"Message": "Something went wrong!",
+		"Error":   err.Error(),
 	}
 }
 

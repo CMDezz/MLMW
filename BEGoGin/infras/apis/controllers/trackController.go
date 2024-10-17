@@ -22,14 +22,17 @@ func (controller Controller) GetAllPublicTracksController(ctx *gin.Context) {
 // GET id user/username from authorization token parsed to payload
 // instead of get from uri
 func (controller Controller) GetAllTracksByUserIdController(ctx *gin.Context) {
-	var req models.ByIdRequest
+	// var req models.ByIdRequest
 
-	//validate req
-	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
-		return
-	}
-	res, err := controller.handler.GetAllTracksByUserIdHandler(ctx, req.ID)
+	// //validate req
+	// if err := ctx.ShouldBindUri(&req); err != nil {
+	// 	ctx.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+	// 	return
+	// }
+	//-> get payload id from ctx
+	Payload := GetPayloadFromCtx(ctx)
+
+	res, err := controller.handler.GetAllTracksByUserIdHandler(ctx, Payload.UserId)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
@@ -47,7 +50,9 @@ func (controller Controller) CreateTrackController(ctx *gin.Context) {
 		return
 	}
 
-	res, err := controller.handler.CreateTrackHandler(ctx, req)
+	Payload := GetPayloadFromCtx(ctx)
+
+	res, err := controller.handler.CreateTrackHandler(ctx, req, Payload.UserId)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
@@ -83,6 +88,23 @@ func (controller Controller) DeleteTrackByIdController(ctx *gin.Context) {
 		return
 	}
 	res, err := controller.handler.DeleteTrackByIdHandler(ctx, req.ID)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.SuccessResponse(res))
+}
+
+func (controller Controller) GetTrackByIdController(ctx *gin.Context) {
+	var req models.ByIdRequest
+
+	//validate req
+	if err := ctx.ShouldBindUri(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+		return
+	}
+	res, err := controller.handler.GetTrackByIdHandler(ctx, req.ID)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))

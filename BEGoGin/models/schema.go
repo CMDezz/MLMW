@@ -19,6 +19,7 @@ type TrackSchema struct {
 	Album       string    `json:"album" db:"album"`
 	Genre       string    `json:"genre" db:"genre"`
 	ReleaseYear int       `json:"release_year" db:"release_year"`
+	Duration    int       `json:"duration" db:"duration"`
 	UserId      int64     `json:"user_id" db:"user_id"`
 	Url         string    `json:"url" db:"url"`
 	IsPublic    bool      `json:"is_public" db:"is_public"`

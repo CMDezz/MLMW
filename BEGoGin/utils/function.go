@@ -39,7 +39,7 @@ func SaveUploadedFile(fileHeader *multipart.FileHeader, uploadDir string) (strin
 		return "", err
 	}
 
-	return config.SVAddress + "/" + destinationPath, nil
+	return "http://" + config.SVAddress + "/" + destinationPath, nil
 }
 
 // Marshal into JSON and return text

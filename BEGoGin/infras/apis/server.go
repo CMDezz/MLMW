@@ -41,7 +41,10 @@ func InitServerConnection(config utils.ENVConfig, store *sqlx.DB) (Server, error
 
 func (server *Server) setUpRouters() {
 	router := gin.Default()
+	router.Use(middlewares.CORSMiddleware())
+
 	public := router.Group("/apis")
+
 	private := router.Group("/apis").Use(middlewares.AuthMiddleware(server.tokenMaker))
 	// Serve static files from the "upload" directory at the URL path "/upload"
 	router.Static("/upload", "./upload")
@@ -51,18 +54,19 @@ func (server *Server) setUpRouters() {
 	public.POST("/user/login", server.controller.LoginUserController)
 
 	public.GET("/track/getAllPublicTracks", server.controller.GetAllPublicTracksController)
+	public.GET("/track/getTrackById/:id", server.controller.GetTrackByIdController)
 
 	public.GET("/playlist/getAllPublicPlaylists", server.controller.GetAllPublicPlaylists)
 
 	public.GET("/search", server.controller.SearchingController)
 
 	//PRIVATE authenticated users
-	private.GET("/track/getAllTracksByUserId/:id", server.controller.GetAllTracksByUserIdController)
+	private.GET("/track/getAllTracksByUserId", server.controller.GetAllTracksByUserIdController)
 	private.POST("/track/createTrack", server.controller.CreateTrackController)
 	private.PUT("/track/updateTrack", server.controller.UpdateTrackController)
 	private.DELETE("/track/deleteTrack/:id", server.controller.DeleteTrackByIdController)
 
-	private.GET("/playlist/getAllPlaylistsByUserId/:id", server.controller.GetAllPlaylistsByUserIdController)
+	private.GET("/playlist/getAllPlaylistsByUserId", server.controller.GetAllPlaylistsByUserIdController)
 	private.POST("/playlist/createPlaylist", server.controller.CreatePlaylistController)
 	private.PUT("/playlist/updatePlaylist", server.controller.UpdatePlaylistController)
 	private.DELETE("/playlist/deletePlaylist/:id", server.controller.DeletePlaylistByIdController)
