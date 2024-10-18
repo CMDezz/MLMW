@@ -28,7 +28,7 @@ type TrackSchema struct {
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 }
 
-type TrackToPlayListSchema struct {
+type TrackPlayListSchema struct {
 	TrackId    int64 `json:"track_id" db:"track_id"`
 	PlaylistId int64 `json:"playlist_id" db:"playlist_id"`
 }

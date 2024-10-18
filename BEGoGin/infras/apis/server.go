@@ -57,6 +57,8 @@ func (server *Server) setUpRouters() {
 	public.GET("/track/getTrackById/:id", server.controller.GetTrackByIdController)
 
 	public.GET("/playlist/getAllPublicPlaylists", server.controller.GetAllPublicPlaylists)
+	public.GET("/playlist/getPlaylistById/:id", server.controller.GetPlaylistByIdController)
+	public.GET("/playlist/getFullPlaylistDetail/:id", server.controller.GetFullPlaylistDetailController)
 
 	public.GET("/search", server.controller.SearchingController)
 
@@ -65,6 +67,9 @@ func (server *Server) setUpRouters() {
 	private.POST("/track/createTrack", server.controller.CreateTrackController)
 	private.PUT("/track/updateTrack", server.controller.UpdateTrackController)
 	private.DELETE("/track/deleteTrack/:id", server.controller.DeleteTrackByIdController)
+
+	private.POST("/trackplaylist/upsert", server.controller.UpsertTracksPlaylistsController)
+	private.GET("/trackplaylist/getDataTrackPlaylistById/:id", server.controller.GetDataTrackPlaylistByIdController)
 
 	private.GET("/playlist/getAllPlaylistsByUserId", server.controller.GetAllPlaylistsByUserIdController)
 	private.POST("/playlist/createPlaylist", server.controller.CreatePlaylistController)

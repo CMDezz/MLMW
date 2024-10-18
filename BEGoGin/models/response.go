@@ -31,7 +31,7 @@ type TrackResponse struct {
 	Duration    int       `json:"duration" db:"duration"`
 	UserId      int64     `json:"user_id" db:"user_id"`
 	Url         string    `json:"url" db:"url"`
-	IsPublic    bool      `form:"is_public" db:"is_public"`
+	IsPublic    bool      `json:"is_public" db:"is_public"`
 	CreatedAt   time.Time `json:"created_at" db:"created_at"`
 }
 
@@ -74,4 +74,19 @@ type ListPlaylistResponse struct {
 type SearchingResponse struct {
 	Tracks    []TrackResponse
 	Playlists []PlaylistResponse
+}
+
+type TracksPlaylistsResponse struct {
+	TrackId    int64 `json:"track_id" db:"track_id"`
+	PlaylistId int64 `json:"playlist_id" db:"playlist_id"`
+}
+
+//response all the playlist id that a track beong
+type DetailTrackPlaylistResponse struct {
+	PlaylistId []int64 `json:"playlist_id" db:"playlist_id"`
+}
+
+type PlaylistFullDetailResponse struct {
+	Playlist PlaylistResponse `json:"playlist"`
+	Tracks   []TrackResponse  `json:"Track"`
 }

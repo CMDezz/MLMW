@@ -51,7 +51,6 @@ func (tokenMaker TokenMaker) ValidToken(token string) (*Payload, error) {
 	}
 	// get payload
 	payload, ok := jwtToken.Claims.(*Payload)
-	fmt.Println("---< pppll ", payload)
 	if !ok {
 		return nil, fmt.Errorf("token is invalid")
 	}

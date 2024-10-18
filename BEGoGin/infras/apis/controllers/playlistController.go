@@ -3,7 +3,6 @@ package controllers
 import (
 	"MLMW/BEGoGin/models"
 	"MLMW/BEGoGin/utils"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -32,8 +31,6 @@ func (controller Controller) GetAllPlaylistsByUserIdController(ctx *gin.Context)
 	// }
 	//-> get payload id from ctx
 	Payload := GetPayloadFromCtx(ctx)
-	fmt.Println("=> Payload ", Payload)
-	fmt.Println("=> UserId ", Payload.UserId)
 
 	res, err := controller.handler.GetAllPlaylistsByUserIdHandler(ctx, Payload.UserId)
 
@@ -91,6 +88,23 @@ func (controller Controller) DeletePlaylistByIdController(ctx *gin.Context) {
 		return
 	}
 	res, err := controller.handler.DeletePlaylistByIdHandler(ctx, req.ID)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.SuccessResponse(res))
+}
+
+func (controller Controller) GetPlaylistByIdController(ctx *gin.Context) {
+	var req models.ByIdRequest
+
+	//validate req
+	if err := ctx.ShouldBindUri(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+		return
+	}
+	res, err := controller.handler.GetPlaylistByIdHandler(ctx, req.ID)
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.ErrorResponse(err))

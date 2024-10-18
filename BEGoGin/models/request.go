@@ -11,6 +11,10 @@ type ByIdRequest struct {
 type SearchingRequest struct {
 	Keyword string `form:"keyword" binding:"required,min=1"`
 }
+type UpsertTracksPlaylistsModel struct {
+	TrackId    int64   `json:"track_id" binding:"required"`
+	PlaylistId []int64 `json:"playlist_id" binding:"required"`
+}
 
 //USER APIS
 type CreateUserRequest struct {
@@ -36,6 +40,7 @@ type CreateTrackFormRequest struct { // Upload by JS FormData, parse to this str
 	Duration    int    `form:"duration" binding:"required"`
 	// UserId      int64                 `form:"user_id" binding:"required"`
 	CoverImage *multipart.FileHeader `form:"cover_image" binding:"required"`
+	IsPublic   bool                  `form:"is_public"`
 	TrackFile  *multipart.FileHeader `form:"track_file" binding:"required"`
 }
 

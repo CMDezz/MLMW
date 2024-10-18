@@ -88,6 +88,7 @@ func (handler Handler) CreateTrackHandler(ctx *gin.Context, req models.CreateTra
 		ReleaseYear: req.ReleaseYear,
 		Duration:    req.Duration,
 		UserId:      userId,
+		IsPublic:    req.IsPublic,
 		CoverImage:  filePathImage,
 		Url:         filePath,
 	}

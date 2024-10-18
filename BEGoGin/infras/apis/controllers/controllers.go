@@ -4,7 +4,6 @@ import (
 	"MLMW/BEGoGin/infras/apis/handlers"
 	"MLMW/BEGoGin/infras/auth"
 	"MLMW/BEGoGin/utils"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
@@ -22,7 +21,6 @@ func NewController(store *sqlx.DB, secretCode string, tokenMaker *auth.TokenMake
 
 func GetPayloadFromCtx(ctx *gin.Context) auth.Payload {
 	pl := ctx.Value(utils.AUTHORIZATION_PAYLOAD_KEY)
-	fmt.Println("=> pl ", pl)
 	payload, ok := pl.(*auth.Payload)
 	if !ok {
 		return auth.Payload{}

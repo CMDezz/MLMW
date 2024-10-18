@@ -146,3 +146,13 @@ func (handler Handler) DeletePlaylistByIdHandler(ctx *gin.Context, id int64) (mo
 		Message: "Deleted successfully",
 	}, nil
 }
+
+func (handler Handler) GetPlaylistByIdHandler(ctx *gin.Context, id int64) (models.PlaylistSchema, error) {
+	res, err := handler.query.GetPlaylistById(ctx, id)
+
+	if err != nil {
+		return models.PlaylistSchema{}, err
+	}
+
+	return res, nil
+}
