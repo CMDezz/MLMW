@@ -24,4 +24,4 @@ EXPOSE 8080
 
 # Set the entrypoint and command
 CMD ["/app/main"]
-ENTRYPOINT ["/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh"]
+# ENTRYPOINT ["/app/wait-for.sh", "postgres:5432", "--", "/app/start.sh"]

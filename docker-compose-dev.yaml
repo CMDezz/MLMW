@@ -11,15 +11,6 @@ services:
       - '/app/node_modules'
     ports:
       - 3000:3000
-  
-  postgres:
-    image: postgres:16-alpine
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=MLMW
 
   api:
     build:
@@ -30,6 +21,21 @@ services:
     environment:
       - DB_SOURCE=postgresql://root:secret@postgres:5432/MLMW?sslmode=disable
     depends_on:
-      - postgres 
+      postgres:
+        condition: service_healthy
     command: ["/app/main"]
-    entrypoint: ["/app/wait-for.sh","postgres:5432","--","/app/start.sh"]
+    # entrypoint: ["/app/wait-for.sh","postgres:5432","--","/app/start.sh"]
+  
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=MLMW
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U root -d MLMW'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
