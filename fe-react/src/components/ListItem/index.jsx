@@ -70,7 +70,7 @@ const ItemPlaylist = ({ item }) => {
     <div className='w-[275px]'>
       <ItemCoverImage id={item.id} image={item.cover_image} />
       <div className=''>
-        <Link to='#'>
+        <Link to={`/upsertPlaylist/${item.id}`}>
           <h5 className='font-semibold text-lg mb-2 truncate'>
             {item.playlist_name}
           </h5>
