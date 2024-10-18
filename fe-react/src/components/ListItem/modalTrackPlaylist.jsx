@@ -89,13 +89,14 @@ const ModalTrackPlaylist = (props) => {
       <Spin spinning={isLoading}>
         {dataMyPlaylist.map((item) => {
           return (
-            <div className='pb-2'>
+            <div className='pb-2 truncate'>
               <Checkbox
+                className=''
                 checked={trackBelongTo[item.id] || false}
                 onChange={(e) => onChangeCheckBox(e.target.checked, item.id)}
                 rootClassName='d-block'
               >
-                {item.playlist_name}
+                <p className=''>{item.playlist_name}</p>
               </Checkbox>
             </div>
           );

@@ -72,7 +72,7 @@ const ItemPlaylist = ({ item }) => {
       <div className=''>
         <Link to='#'>
           <h5 className='font-semibold text-lg mb-2 truncate'>
-            {item.playlist_name} asd asdas asd as dd asd asd asasd{' '}
+            {item.playlist_name}
           </h5>
         </Link>
       </div>
@@ -91,11 +91,9 @@ const ItemTrack = ({ item, onClickBtn = () => {} }) => {
       />
       <div>
         <Link to={'upsertTrack/' + item.id}>
-          <h5 className='font-semibold text-lg mb-1 truncate'>
-            {item.title} asd asd asd asdd asd asd asd asd asd as asd
-          </h5>
+          <h5 className='font-semibold text-lg mb-1 truncate'>{item.title}</h5>
         </Link>
-        <p>{item.artist}</p>
+        <p className='truncate'>{item.artist}</p>
       </div>
     </div>
   );
