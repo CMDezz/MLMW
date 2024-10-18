@@ -10,7 +10,7 @@ This folder contains the frontend code for the Music Library Management Website 
 - **Tailwind CSS**
 - **Ant Design (Antd)**
 
-## Installation
+## Installation Locally
 
 To install the necessary dependencies, run the following command:
 

@@ -36,6 +36,10 @@ const ModalTrackPlaylist = (props) => {
         })
         .catch(() => setIsLoading(false));
     }
+    return () => {
+      setTrackBelongTo({});
+      setDataMyPlaylist([]);
+    };
   }, [id]);
 
   const getDataTrackPlaylistById = async (id) => {

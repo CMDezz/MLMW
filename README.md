@@ -30,7 +30,7 @@ MLMW is a web-based application for managing a music library, allowing users to 
 
 - Node.js 18+ (for frontend)
 - Docker (for backend and database)
-- Golang 1.22.5+
+- Golang 1.22.3+
 - Postgres
 
 ### Steps
@@ -38,14 +38,19 @@ MLMW is a web-based application for managing a music library, allowing users to 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/mlmw.git
+   https://github.com/CMDezz/MLMW.git
    ```
 
-2. Navigate to the frontend and backend directories to install dependencies.
-
-#### Frontend
+2. To run the entire app using Docker Compose, from the root directory:
 
 ```bash
-cd frontend
-npm install
+docker compose -f docker-compose-dev.yaml up -d --build
 ```
+
+3. To shutdown :
+
+```bash
+docker compose -f docker-compose-dev.yaml down
+```
+
+4. To run the app from local, please read more detail at each folder FE/BE
