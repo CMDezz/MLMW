@@ -17,6 +17,8 @@ COPY start.sh .
 RUN chmod +x wait-for.sh
 RUN chmod +x start.sh
 COPY dto/migration ./dto/migration
+# temporarily
+COPY upload ./upload
 # Expose port 8080 (if not already done in Dockerfile)
 EXPOSE 8080
 

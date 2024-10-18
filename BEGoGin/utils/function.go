@@ -33,13 +33,7 @@ func SaveUploadedFile(fileHeader *multipart.FileHeader, uploadDir string) (strin
 	if _, err := io.Copy(dstFile, srcFile); err != nil {
 		return "", err
 	}
-	//Temporarily get sv address from config
-	config, err := LoadConfig()
-	if err != nil {
-		return "", err
-	}
-
-	return "http://" + config.SVAddress + "/" + destinationPath, nil
+	return destinationPath, nil
 }
 
 // Marshal into JSON and return text

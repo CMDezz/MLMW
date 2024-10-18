@@ -19,7 +19,7 @@ const ItemCoverImage = ({ image, id }) => {
           <PlayIcon />
         </div>
         <img
-          src={image}
+          src={process.env.REACT_APP_HOST + image}
           className='top-0 left-0 w-full h-full absolute object-cover'
         />
       </div>
@@ -57,7 +57,7 @@ const ItemCoverImageTrack = ({ item, id, image, onClickBtn }) => {
           </div>
         </div>
         <img
-          src={image}
+          src={process.env.REACT_APP_HOST + image}
           className='top-0 left-0 w-full h-full absolute object-cover'
         />
       </div>

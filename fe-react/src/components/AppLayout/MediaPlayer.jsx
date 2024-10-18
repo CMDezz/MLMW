@@ -57,7 +57,7 @@ const MediaPlayer = () => {
         <div className='flex gap-3 w-[45%]'>
           <img
             className='w-[70px] h-70px object-cover'
-            src={currentTrack.cover_image}
+            src={process.env.REACT_APP_HOST + currentTrack.cover_image}
           />
           <div className='w-[70%] '>
             <h5 className='pb-1 text-lg font-semibold truncate'>
@@ -80,7 +80,7 @@ const MediaPlayer = () => {
             onPlay={onPlaying} // Listen to play event
             onPause={onPause} // Listen to pause event
             ref={audioRef}
-            src={currentTrack.url}
+            src={process.env.REACT_APP_HOST + currentTrack.url}
             preload='auto'
           />
         </div>

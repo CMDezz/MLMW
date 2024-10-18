@@ -21,7 +21,7 @@ const TrackAudio = ({ item }) => {
         <div className='flex gap-5'>
           <img
             className='w-[70px] h-70px object-cover'
-            src={item.cover_image}
+            src={process.env.REACT_APP_HOST + item.cover_image}
           />
           <div className='w-[70%] '>
             <h5 className='pb-1 text-lg font-semibold truncate'>
@@ -55,7 +55,7 @@ const PlaylistDetail = () => {
         <div className='w-[333px]'>
           <div className='relative w-full pt-[56.25%] overflow-hidden'>
             <img
-              src={data?.playlist?.cover_image}
+              src={process.env.REACT_APP_HOST + data?.playlist?.cover_image}
               className='top-0 left-0 w-full h-full absolute object-cover'
             />
           </div>
