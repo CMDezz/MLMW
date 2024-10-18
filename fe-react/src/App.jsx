@@ -16,6 +16,7 @@ import TrackDetail from './pages/TrackDetail';
 import UpsertPlaylist from './pages/UpsertPlaylist';
 import UpsertTrack from './pages/UpsertTrack';
 import { AuthContext, AuthProvider } from './contexts/AuthProvider';
+import { MediaContext, MediaProvider } from './contexts/MediaProvider';
 
 const PrivateRoute = ({ element }) => {
   const { auth } = useContext(AuthContext);
@@ -28,39 +29,50 @@ function App() {
   return (
     <div className='App'>
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<AppLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path='/login' element={<Login />}></Route>
-              <Route path='/searchResult' element={<SearchResult />}></Route>
-              <Route
-                path='myLibrary'
-                element={<PrivateRoute element={<MyLibrary />} />}
-              ></Route>
-              <Route
-                path='/playlistDetail'
-                element={<PrivateRoute element={<PlaylistDetail />} />}
-              ></Route>
-              <Route
-                path='/trackDetail'
-                element={<PrivateRoute element={<TrackDetail />} />}
-              ></Route>
-              <Route
-                path='/upsertPlaylist/:id'
-                element={<PrivateRoute element={<UpsertPlaylist />} />}
-              ></Route>
-              <Route
-                path='/upsertTrack'
-                element={<PrivateRoute element={<UpsertTrack />} />}
-              ></Route>
-              <Route
-                path='/upsertTrack/:id'
-                element={<PrivateRoute element={<UpsertTrack />} />}
-              ></Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <MediaProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<AppLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path='/login' element={<Login />}></Route>
+                {/* <Route path='/searchResult' element={<SearchResult />}></Route> */}
+                <Route
+                  path='myLibrary'
+                  element={<PrivateRoute element={<MyLibrary />} />}
+                ></Route>
+                <Route
+                  path='/playlistDetail'
+                  element={<PrivateRoute element={<PlaylistDetail />} />}
+                ></Route>
+                <Route
+                  path='/playlistDetail/:id'
+                  element={<PrivateRoute element={<PlaylistDetail />} />}
+                ></Route>
+                <Route
+                  path='/trackDetail'
+                  element={<PrivateRoute element={<TrackDetail />} />}
+                ></Route>
+                <Route
+                  path='/upsertPlaylist'
+                  element={<PrivateRoute element={<UpsertPlaylist />} />}
+                ></Route>
+                <Route
+                  path='/upsertPlaylist/:id'
+                  element={<PrivateRoute element={<UpsertPlaylist />} />}
+                ></Route>
+                <Route
+                  path='/upsertTrack'
+                  element={<PrivateRoute element={<UpsertTrack />} />}
+                ></Route>
+                <Route
+                  path='/upsertTrack/:id'
+                  element={<PrivateRoute element={<UpsertTrack />} />}
+                ></Route>
+                <Route path='*' element={<Navigate to='/' replace />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </MediaProvider>
       </AuthProvider>
     </div>
   );

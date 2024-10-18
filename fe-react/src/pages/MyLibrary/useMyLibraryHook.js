@@ -10,7 +10,6 @@ const useMyLibraryHook = () => {
 
   useEffect(() => {
     Promise.all([getDataTrack(), getDataPlaylist()]);
-    console.log('mounted');
 
     return () => {
       setDataTrack([]);
@@ -24,8 +23,6 @@ const useMyLibraryHook = () => {
     setIsLoadingTrack(true);
     const res = await TrackApis.GetAllTracksByUserId();
     if (res.Data) {
-      console.log('res.Data.Tracks ', res.Data.Tracks);
-
       setDataTrack(res.Data.Tracks);
     }
     setIsLoadingTrack(false);
@@ -35,8 +32,6 @@ const useMyLibraryHook = () => {
     setIsLoadingPlaylist(true);
     const res = await PlaylistApis.GetAllPlaylistsByUserId();
     if (res.Data) {
-      console.log('res.Data.Playlists ', res.Data.Playlists);
-
       setDataPlaylist(res.Data.Playlists);
     }
     setIsLoadingPlaylist(false);

@@ -13,7 +13,6 @@ const useLoginHook = () => {
 
   const onLogin = async (loginFormData) => {
     const res = await UserApis.Login(loginFormData);
-    console.log('res ', res);
     if (res.Data) {
       message.success(res.Message);
       updateAuth({

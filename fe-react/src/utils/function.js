@@ -10,3 +10,10 @@ export const createSampleFileFormUrl = (url, fileType) => {
   const file = new File([fileContent], filename, { type: fileType });
   return file;
 };
+
+export const normFile = (e) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e && e.fileList;
+};

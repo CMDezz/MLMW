@@ -8,9 +8,6 @@ const Login = () => {
   const { onLogin, setIsOpenModalRegister, onRegister, isOpenModalRegister } =
     useLoginHook();
   const onFinish = (values) => {
-    console.log('Success:2', values);
-    console.log('process.env.REACT_HOST_API; ', process.env.REACT_APP_HOST_API);
-
     onLogin(values);
   };
 

@@ -1,8 +1,18 @@
 import React from 'react';
 import PageTitle from '../../components/Base/PageTitle';
 import { useParams } from 'react-router-dom';
-import { Button, Form, Input, InputNumber, Upload } from 'antd';
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Row,
+  Switch,
+  Upload,
+} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { normFile } from '../../utils/function';
 import useUpsertTrackHook from './useUpsertTrackHook';
 const UpsertTrack = () => {
   let { id } = useParams();
@@ -23,18 +33,14 @@ const UpsertTrack = () => {
 
       <Form
         // {...formItemLayout}
-        labelCol={{
-          md: { span: 24 },
-        }}
-        wrapperCol={{
-          md: { span: 24 },
-        }}
+        layout='vertical'
         autoComplete='off'
         form={form}
-        name='register'
+        name='upsertTrack'
         onFinish={onFinish}
         style={{ maxWidth: 600 }}
         scrollToFirstError
+        className='mx-auto border px-10 py-2 rounded-md'
       >
         <Form.Item
           name='title'
@@ -123,7 +129,7 @@ const UpsertTrack = () => {
             },
           ]}
         >
-          <InputNumber autoComplete='off' />
+          <InputNumber rootClassName='w-full' autoComplete='off' />
         </Form.Item>
         <Form.Item
           name='duration'
@@ -141,11 +147,16 @@ const UpsertTrack = () => {
             },
           ]}
         >
-          <InputNumber type='number' autoComplete='off' />
+          <InputNumber
+            rootClassName='w-full'
+            type='number'
+            autoComplete='off'
+          />
         </Form.Item>
         <Form.Item
           name='track_file'
           label='MP3 File'
+          getValueFromEvent={normFile}
           valuePropName='track_file'
           rules={[
             {
@@ -166,9 +177,9 @@ const UpsertTrack = () => {
             </Button>
           </Upload>
         </Form.Item>
-        {console.log('imageList ', imageList)}
         <Form.Item
           name='cover_image'
+          getValueFromEvent={normFile}
           label='Cover Image (16x9 resolution is prefer)'
           valuePropName='cover_image'
           rules={[
@@ -191,11 +202,26 @@ const UpsertTrack = () => {
             </Button>
           </Upload>
         </Form.Item>
-        <Form.Item className='w-full' wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type='primary' htmlType='submit'>
-            Submit
-          </Button>
-        </Form.Item>
+        <Row justify={'space-between'}>
+          <Col>
+            <Form.Item
+              // wrapperCol={{ offset: 8, span: 8 }}
+              name={'is_public'}
+              valuePropName={'is_public'}
+              label={'Is Plulic'}
+              layout='horizontal'
+            >
+              <Switch name={'is_public'} defaultChecked />
+            </Form.Item>
+          </Col>
+          <Col>
+            <Form.Item className='w-full' wrapperCol={{ offset: 8, span: 16 }}>
+              <Button type='primary' htmlType='submit'>
+                Submit
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </div>
   );

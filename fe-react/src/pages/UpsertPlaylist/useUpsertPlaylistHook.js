@@ -1,92 +1,72 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import TrackApis from '../../apis/TrackApis';
 import { Form, message } from 'antd';
 import { createSampleFileFormUrl } from '../../utils/function';
+import PlaylistApis from '../../apis/PlaylistApis';
 
-const useUpsertTrackHook = () => {
+const useUpsertPlaylistHook = () => {
   let { id } = useParams();
-  const [fileList, setFileList] = useState([]);
   const [imageList, setImageList] = useState([]);
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
-      getCurrentTrack(id);
+      getCurrentPlaylist(id);
     }
     return () => {
       setIsLoading(false);
       setImageList([]);
-      setFileList([]);
     };
   }, [id]);
 
   const resetFieldFormData = (resData) => {
-    const trackFile = createSampleFileFormUrl(resData.url, 'audio/mpeg');
     const coverImage = createSampleFileFormUrl(
       resData.cover_image,
       'image/jpeg'
     );
 
     form.setFieldsValue({
-      title: resData.title,
-      artist: resData.artist,
-      album: resData.album,
-      genre: resData.genre,
-      release_year: resData.release_year,
-      duration: resData.duration,
-      track_file: trackFile,
+      playlist_name: resData.playlist_name,
+      description: resData.description,
       cover_image: coverImage,
       is_public: resData.is_public,
     });
-    setFileList([trackFile]);
     setImageList([coverImage]);
   };
 
-  const getCurrentTrack = async (id) => {
+  const getCurrentPlaylist = async (id) => {
     setIsLoading(true);
-    const res = await TrackApis.GetTrackById(id);
+    const res = await PlaylistApis.GetPlaylistById(id);
     if (res.Data) {
       resetFieldFormData(res.Data);
     }
     setIsLoading(false);
   };
 
-  const beforeUploadFileTrack = () => {
-    return false;
-  };
   const beforeUploadCoverImage = () => {
     return false;
   };
 
   const onFinish = async (values) => {
     const formData = new FormData();
-    formData.append('album', values.album);
-    formData.append('artist', values.artist);
-    formData.append('duration', values.duration);
-    formData.append('genre', values.genre);
-    formData.append('release_year', values.release_year);
-    formData.append('title', values.title);
-    formData.append(
-      'is_public',
-      values.is_public != undefined ? values.is_public : true
-    );
-    const _track_file = values.track_file?.[0]?.originFileObj;
+    formData.append('playlist_name', values.playlist_name);
+    formData.append('description', values.description);
+    formData.append('is_public', values.is_public);
+
     const _cover_image = values.cover_image?.[0]?.originFileObj;
+
+    // formData.delete('_cover_image');
     if (_cover_image?.size) {
       formData.append('cover_image', values.cover_image?.[0]?.originFileObj);
     }
-    if (_track_file?.size) {
-      formData.append('track_file', values.track_file?.[0]?.originFileObj);
-    }
-
     let res = {};
     if (id) {
       formData.append('id', id);
-      res = await TrackApis.UpdateTrack(formData);
+
+      res = await PlaylistApis.UpdatePlaylist(formData);
     } else {
-      res = await TrackApis.CreateTrack(formData);
+      res = await PlaylistApis.CreatePlaylist(formData);
     }
 
     if (res.Data) {
@@ -95,19 +75,21 @@ const useUpsertTrackHook = () => {
         resetFieldFormData(res.Data);
       } else {
         form.resetFields();
-        setFileList([]);
         setImageList([]);
       }
     }
     // onOk(values);
   };
 
+  const onRemoveCoverImage = () => {
+    setImageList([]);
+    form.setFieldValue('cover_image', { file: {}, fileList: [] });
+  };
+
   return {
-    beforeUploadFileTrack,
     beforeUploadCoverImage,
-    fileList,
+    onRemoveCoverImage,
     imageList,
-    setFileList,
     setImageList,
     form,
     onFinish,
@@ -115,4 +97,4 @@ const useUpsertTrackHook = () => {
   };
 };
 
-export default useUpsertTrackHook;
+export default useUpsertPlaylistHook;
